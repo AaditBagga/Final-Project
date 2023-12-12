@@ -28,7 +28,7 @@ function ExpensePage() {
   };
 
   const fetchExpenses = () => {
-    axios.get('http://localhost:3001/api/expenses', { params: { userId: currentUser.uid } })
+    axios.get('http://localhost:3001/api/expenses',  { params: { userId: currentUser.uid, month: selectedMonth } })
       .then(response => setExpenses(response.data))
       .catch(error => console.error('Error fetching expenses:', error));
   };
@@ -40,7 +40,7 @@ function ExpensePage() {
         userId: currentUser.uid,
         category: selectedCategory,
         amount,
-        month: selectedMonth
+        date: selectedMonth
       });
       setExpenses([...expenses, response.data]);
     } catch (error) {

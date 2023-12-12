@@ -16,10 +16,13 @@ exports.addExpense = async (req, res) => {
 };
 
 exports.getExpenses = async (req, res) => {
+    console.log("Received getExpenses request:", req.query);
     try {
         const expenses = await Expense.find({ userId: req.query.userId });
+        console.log("Expenses fetched:", expenses);
         res.json(expenses);
     } catch (error) {
+        console.error("Error in getExpenses:", error);
         res.status(500).json({ message: error.message });
     }
 };
