@@ -44,7 +44,7 @@ function DashboardPage() {
     const totalExpense = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     const remainingBudget = totalBudget - totalExpense;
 
-    // Prepare monthly expenses data
+    // Prepare monthly expenses
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const monthlyExpenses = months.map(month => {
         const monthExpenses = expenses.filter(e => new Date(e.date).getMonth() === months.indexOf(month));
