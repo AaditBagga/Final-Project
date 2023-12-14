@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://157.245.132.124/api/budget'; // Replace with your actual API endpoint
+const API_URL = 'http://157.245.132.124:3001/api/budget'; // Replace with your actual API endpoint
 
 // Fetch all budgets for a user
 export const getBudgets = async (userId) => {

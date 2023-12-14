@@ -22,13 +22,13 @@ function ExpensePage() {
 
     // Fetch categories from the backend
     const fetchCategories = () => {
-    axios.get('http://157.245.132.124/api/budget/categories', { params: { userId: currentUser.uid } })
+    axios.get('http://157.245.132.124:3001/api/budget/categories', { params: { userId: currentUser.uid } })
       .then(response => setCategories(response.data))
       .catch(error => console.error('Error fetching categories:', error));
   };
 
   const fetchExpenses = () => {
-    axios.get('http://157.245.132.124/api/expenses',  { params: { userId: currentUser.uid, month: selectedMonth } })
+    axios.get('http://157.245.132.124:3001/api/expenses',  { params: { userId: currentUser.uid, month: selectedMonth } })
       .then(response => setExpenses(response.data))
       .catch(error => console.error('Error fetching expenses:', error));
   };
@@ -36,7 +36,7 @@ function ExpensePage() {
   const handleAddExpense = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://157.245.132.124/api/expenses/add', {
+      const response = await axios.post('http://157.245.132.124:3001/api/expenses/add', {
         userId: currentUser.uid,
         category: selectedCategory,
         amount,
