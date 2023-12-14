@@ -16,13 +16,22 @@ exports.addExpense = async (req, res) => {
 };
 
 exports.getExpenses = async (req, res) => {
-    console.log("Received getExpenses request:", req.query);
     try {
-        const expenses = await Expense.find({ userId: req.query.userId });
-        console.log("Expenses fetched:", expenses);
+        const { userId, month } = req.query;
+        let query = { userId: userId };
+
+        if (month) {
+            // Assuming month is in 'MM' format
+            const year = new Date().getFullYear(); // Use the current year
+            const startDate = new Date(`${year}-${month}-01`);
+            const endDate = new Date(year, startDate.getMonth() + 1, 1);
+
+            query.date = { $gte: startDate, $lt: endDate };
+        }
+
+        const expenses = await Expense.find(query);
         res.json(expenses);
     } catch (error) {
-        console.error("Error in getExpenses:", error);
         res.status(500).json({ message: error.message });
     }
 };
