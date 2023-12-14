@@ -16,7 +16,7 @@ function BudgetPage() {
   const addBudgetCategory = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://157.245.132.124:3001/api/budget/add', {
+      const response = await axios.post('https://seashell-app-ezefn.ondigitalocean.app:3001/api/budget/add', {
         userId: currentUser.uid,
         category,
         amount
@@ -30,7 +30,7 @@ function BudgetPage() {
   // Handle removing a budget category
   const removeBudgetCategory = async (categoryId) => {
     try {
-      await axios.delete(`http://157.245.132.124:3001/api/budget/delete/${categoryId}`);
+      await axios.delete(`https://seashell-app-ezefn.ondigitalocean.app:3001/api/budget/delete/${categoryId}`);
       setBudgets(budgets.filter(budget => budget._id !== categoryId));
     } catch (error) {
       console.error('Error removing budget category:', error);

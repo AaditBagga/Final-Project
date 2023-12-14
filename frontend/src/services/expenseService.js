@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://157.245.132.124:3001/api/expenses'; // Replace with your actual API endpoint
+const API_URL = 'https://seashell-app-ezefn.ondigitalocean.app:3001/api/expenses'; // Replace with your actual API endpoint
 
 // Fetch all expenses for a user
 export const getExpenses = async (userId) => {
