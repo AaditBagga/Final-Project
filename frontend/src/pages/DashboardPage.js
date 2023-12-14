@@ -20,13 +20,13 @@ function DashboardPage() {
     }, [selectedMonth, currentUser.uid]);
 
     const fetchBudget = () => {
-        axios.get('https://157.245.132.124/api/budget', { params: { userId: currentUser.uid } })
+        axios.get('http://157.245.132.124/api/budget', { params: { userId: currentUser.uid } })
             .then(response => setBudget(response.data))
             .catch(error => console.error('Error fetching budget data:', error));
     };
 
     const fetchExpenses = () => {
-        axios.get('https://157.245.132.124/api/expenses', { params: { userId: currentUser.uid, month: selectedMonth } })
+        axios.get('http://157.245.132.124/api/expenses', { params: { userId: currentUser.uid, month: selectedMonth } })
             .then(response => setExpenses(response.data))
             .catch(error => console.error('Error fetching expenses data:', error));
     };
