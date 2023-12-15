@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
+import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import { auth } from '../firebaseConfig'; 
 import { AuthContext } from '../AuthContext'; 
 import axios from 'axios';
@@ -13,6 +14,7 @@ function DashboardPage() {
     const [expenses, setExpenses] = useState([]);
     const { currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [tokenExpiryWarning, setTokenExpiryWarning] = useState(false);
 
     useEffect(() => {
         fetchBudget();
@@ -29,6 +31,29 @@ function DashboardPage() {
         axios.get('http://157.245.132.124:3001/api/expenses', { params: { userId: currentUser.uid, month: selectedMonth } })
             .then(response => setExpenses(response.data))
             .catch(error => console.error('Error fetching expenses data:', error));
+    };
+
+    useEffect(() => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+    if (user) {
+        // Set a timeout for 40 seconds after login
+        const tokenTimer = setTimeout(() => {
+            setTokenExpiryWarning(true);
+        }, 40000); // 40 seconds
+      
+        // Clean up the timer on component unmount
+        return () => clearTimeout(tokenTimer);
+        }
+    }, []);
+
+    const refreshToken = () => {
+        const auth = getAuth();
+        auth.currentUser.getIdToken(true).then(() => {
+          console.log('Token refreshed');
+          setTokenExpiryWarning(false);
+        });
     };
 
     const handleLogout = async () => {
@@ -127,6 +152,12 @@ function DashboardPage() {
                 <button onClick={handleLogout}>Logout</button>
             </nav>
             <h1>Dashboard</h1>
+            {tokenExpiryWarning && (
+                <div>
+                    <p>Your session is about to expire.</p>
+                    <button onClick={refreshToken}>Refresh Session</button>
+                </div>
+            )}
             <div>
                 <label>
                     Select Month:
