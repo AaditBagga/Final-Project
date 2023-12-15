@@ -72,7 +72,7 @@ function DashboardPage() {
     // Prepare monthly expenses
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const monthlyExpenses = months.map(month => {
-        const monthExpenses = expenses.filter(e => new Date(e.date).getMonth() === months.indexOf(month));
+        const monthExpenses = expenses.filter(e => new Date(e.date).getMonth() === months.indexOf(month) - 1);
         return monthExpenses.reduce((acc, e) => acc + e.amount, 0);
     });
         
